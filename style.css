@@ -166,3 +166,39 @@ body {
     margin-top: 0.1rem;
     margin-bottom: 0.1rem;
 }
+
+
+
+@media (max-width:500px){
+    div.modal_container {
+        position: absolute;
+        height: 14rem;
+        width: 22rem;
+        background-color: brown;
+        left: calc((100vw - 36rem)/2);
+        top: 30vh;
+        display: flex;
+        box-shadow: 0 1rem 3rem rgb(0 0 0 / 70%);
+        margin-left: 7rem;
+    }
+
+    div.filter-container {
+        height: 49%;
+        width: 20rem;
+        margin-right: 3rem;
+        border-radius: 0.2rem;
+        background-color: #6d7c7e;
+        display: flex;
+        margin-left: -4rem;
+    }
+
+    div.action-container {
+        height: 50%;
+        width: 11rem;
+        background-color: #6d7c7e;
+        border-radius: 0.2rem;
+        display: flex;
+        border-radius: 0.2rem solid;
+        margin-right: 1rem;
+    }
+}
