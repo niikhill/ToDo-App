@@ -201,4 +201,14 @@ body {
         border-radius: 0.2rem solid;
         margin-right: 1rem;
     }
+
+    div.main_container {
+        height: 88vh;
+        padding-top: 2rem;
+        padding-left: 3rem;
+        display: flex;
+        justify-content: space-evenly;
+        flex-wrap: wrap;
+        overflow-y: auto;
+    }
 }
