@@ -7,6 +7,13 @@ let crossButton = document.querySelector(".fa-times");
 let uifn = new ShortUniqueId();
 
 
+//Tool Tip Text
+tippy('#filter-container', {
+    content: "Click on color to filter the tasks",
+    theme: 'light'
+  });
+
+
 let taskArr = [];
 if (localStorage.getItem("allTask")) {
     taskArr = JSON.parse(localStorage.getItem("allTask"));
