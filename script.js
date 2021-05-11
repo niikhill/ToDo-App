@@ -105,14 +105,13 @@ function createTask(color, task, flag, id) {
         let finalArr = JSON.stringify(taskArr);
         localStorage.setItem("allTask", finalArr);
     }
-    taskFilter.addEventListener("click", changeColor)
-    taskContainer.addEventListener("click", deleteTask);
+    taskFilter.addEventListener("click",changeColor)
+    taskContainer.addEventListener("click",deleteTask);
     let taskDesc = taskContainer.querySelector(".task_desc");
     taskDesc.addEventListener("keypress", editTask);
 }
 
 function changeColor(e) {
-
     let taskFilter = e.currentTarget;
     let taskContainer = taskFilter.parentNode;
     let colors = ["pink", "blue", "green", "black"];
