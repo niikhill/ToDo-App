@@ -224,7 +224,16 @@ function editTask(e) {
 }
 
 function setDeleteState(e) {
-
+    Swal.fire({
+        title: 'Delete State On',
+        text: "Click on Task to delete it",
+        showClass: {
+          popup: 'animate__animated animate__fadeInDown'
+        },
+        hideClass: {
+          popup: 'animate__animated animate__fadeOutUp'
+        }
+      })
     let crossButton = e.currentTarget;
     let parent = crossButton.parentNode;
     if (deleteState == false) {
