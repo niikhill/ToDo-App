@@ -105,17 +105,39 @@ function createTask(color, task, flag, id) {
         let finalArr = JSON.stringify(taskArr);
         localStorage.setItem("allTask", finalArr);
     }
-    taskFilter.addEventListener("click", () => {
-        let colors = ["pink", "green", "blue", "black"];
-        let currentColor = taskFilter.classList[1];
-        let idx = colors.indexOf(currentColor);
-        let newColorIdx = (idx + 1) % 4;
-        taskFilter.classList.remove(currentColor);
-        taskFilter.classList.add(colors[newColorIdx]);
-    })
+    taskFilter.addEventListener("click", changeColor)
     taskContainer.addEventListener("click", deleteTask);
     let taskDesc = taskContainer.querySelector(".task_desc");
     taskDesc.addEventListener("keypress", editTask);
+}
+
+function changeColor(e) {
+
+    let taskFilter = e.currentTarget;
+    let taskContainer = taskFilter.parentNode;
+    let colors = ["pink", "blue", "green", "black"];
+    let cColor = taskFilter.classList[1];
+    let idx = colors.indexOf(cColor);
+    let newColorIdx = (idx + 1) % 4;
+    taskFilter.classList.remove(cColor);
+    taskFilter.classList.add(colors[newColorIdx]);
+    let taskDesc = taskContainer.querySelector(".task_desc");
+    let uidElem = taskDesc.parentNode.children[0];
+    let uid = uidElem.innerText.split("#")[1];
+    for (let i = 0; i < taskArr.length; i++) {
+        let {
+            id
+        } = taskArr[i];
+        console.log(id, uid);
+        if (id == uid) {
+            taskArr[i].color = taskFilter.classList[1];
+            let finalTaskArr = JSON.stringify(taskArr);
+            localStorage.setItem("allTask", finalTaskArr);
+
+            break;
+        }
+    }
+
 }
 
 function deleteTask(e) {
