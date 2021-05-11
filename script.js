@@ -25,8 +25,14 @@ if (localStorage.getItem("allTask")) {
 for (let i = 0; i < colorBtn.length; i++) {
     colorBtn[i].addEventListener("click", function (e) {
         let color = colorBtn[i].classList[1];
-
-        mainContainer.style.backgroundColor = color;
+        let taskContainer = document.querySelectorAll(".task_container")
+        taskContainer.forEach(item =>{
+            if(item.children[0].classList[1]==color){
+                item.style.display = "block";
+            }else{
+                item.style.display = "none";
+            }
+        })
     })
 }
 
@@ -146,6 +152,7 @@ function deleteTask(e) {
     let taskContainer = e.currentTarget;
     let uidElem = taskContainer.querySelector(".uid");
     let uid = uidElem.innerText.split("#")[1];
+    if (deleteState == true) {
     Swal.fire({
         title: 'Are you sure?',
         text: "You won't be able to revert this!",
@@ -180,6 +187,7 @@ function deleteTask(e) {
             }
         }
     })
+}
 }
 
 // function deleteTask(e) {
