@@ -3,6 +3,7 @@ let mainContainer = document.querySelector(".main_container");
 let body = document.body;
 let plusButton = document.querySelector(".fa-plus");
 let deleteState = false;
+let editState = false;
 let crossButton = document.querySelector(".fa-times");
 let uifn = new ShortUniqueId();
 
@@ -11,7 +12,9 @@ let uifn = new ShortUniqueId();
 tippy('#filter-container', {
     content: "Click on color to filter the tasks",
     theme: 'light'
-  });
+});
+
+
 
 
 let taskArr = [];
@@ -33,10 +36,10 @@ for (let i = 0; i < colorBtn.length; i++) {
     colorBtn[i].addEventListener("click", function (e) {
         let color = colorBtn[i].classList[1];
         let taskContainer = document.querySelectorAll(".task_container")
-        taskContainer.forEach(item =>{
-            if(item.children[0].classList[1]==color){
+        taskContainer.forEach(item => {
+            if (item.children[0].classList[1] == color) {
                 item.style.display = "block";
-            }else{
+            } else {
                 item.style.display = "none";
             }
         })
@@ -98,6 +101,9 @@ function handleModal(modal_container) {
     })
 }
 
+
+
+
 function createTask(color, task, flag, id) {
     let taskContainer = document.createElement("div");
     taskContainer.setAttribute("class", "task_container");
@@ -105,9 +111,11 @@ function createTask(color, task, flag, id) {
     taskContainer.innerHTML = `<div class="task_filter ${color}"></div>
     <div class="task_desc_container">
         <h3 class="uid">#${uid}</h3>
-        <div class="task_desc" contentEditable="true">${task}</div>
+        <div class="task_desc" contentEditable="false">${task}</div>
     </div>
-</div >`;
+</div ><div class ="lock" id ="edit_lock"><i class="fas fa-lock"></i></div>
+`;
+
     mainContainer.appendChild(taskContainer);
     let taskFilter = taskContainer.querySelector(".task_filter");
     if (flag == true) {
@@ -125,6 +133,31 @@ function createTask(color, task, flag, id) {
     taskContainer.addEventListener("click", deleteTask);
     let taskDesc = taskContainer.querySelector(".task_desc");
     taskDesc.addEventListener("keypress", editTask);
+
+    let lockElem = taskContainer.querySelectorAll(".lock")
+    tippy('#edit_lock',{
+        content: "Click on lock to edit the tasks",
+        theme: 'light',
+    })
+    lockElem.forEach(item => {
+        item.addEventListener("click", (e) => {
+            // console.log(item.children[0].classList[1])
+            if (editState == false) {
+                item.children[0].classList.remove("fa-lock");
+                item.children[0].classList.add("fa-lock-open");
+                editState = true;
+                taskDesc.setAttribute("contentEditable","true");
+            } else {
+                item.children[0].classList.remove("fa-lock-open");
+                item.children[0].classList.add("fa-lock");
+                editState = false;
+                taskDesc.setAttribute("contentEditable","false");
+            }
+        })
+        
+
+    })
+
 }
 
 function changeColor(e) {
@@ -160,41 +193,41 @@ function deleteTask(e) {
     let uidElem = taskContainer.querySelector(".uid");
     let uid = uidElem.innerText.split("#")[1];
     if (deleteState == true) {
-    Swal.fire({
-        title: 'Are you sure?',
-        text: "You won't be able to revert this!",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, delete it!'
-    }).then((result) => {
-        if (result.isConfirmed) {
-            Swal.fire(
-                'Deleted!',
-                `Task with ID ${uid} was successfully deleted`,
-                'success'
-            )
-            
-            if (deleteState == true) {
-                // taskContainer.remove();
-                for (let i = 0; i < taskArr.length; i++) {
-                    let {
-                        id
-                    } = taskArr[i];
-                    console.log(id, uid);
-                    if (id == uid) {
-                        taskArr.splice(i, 1);
-                        let finalTaskArr = JSON.stringify(taskArr);
-                        localStorage.setItem("allTask", finalTaskArr);
-                        taskContainer.remove();
-                        break;
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire(
+                    'Deleted!',
+                    `Task with ID ${uid} was successfully deleted`,
+                    'success'
+                )
+
+                if (deleteState == true) {
+                    // taskContainer.remove();
+                    for (let i = 0; i < taskArr.length; i++) {
+                        let {
+                            id
+                        } = taskArr[i];
+                        console.log(id, uid);
+                        if (id == uid) {
+                            taskArr.splice(i, 1);
+                            let finalTaskArr = JSON.stringify(taskArr);
+                            localStorage.setItem("allTask", finalTaskArr);
+                            taskContainer.remove();
+                            break;
+                        }
                     }
                 }
             }
-        }
-    })
-}
+        })
+    }
 }
 
 // function deleteTask(e) {
@@ -239,7 +272,7 @@ function editTask(e) {
 }
 
 function setDeleteState(e) {
-    
+
     let crossButton = e.currentTarget;
     let parent = crossButton.parentNode;
     if (deleteState == false) {
@@ -248,24 +281,24 @@ function setDeleteState(e) {
             title: 'Delete State On',
             text: "Click on Task to delete it",
             showClass: {
-              popup: 'animate__animated animate__fadeInDown'
+                popup: 'animate__animated animate__fadeInDown'
             },
             hideClass: {
-              popup: 'animate__animated animate__fadeOutUp'
+                popup: 'animate__animated animate__fadeOutUp'
             }
-          })
+        })
     } else {
         parent.classList.remove("active");
         Swal.fire({
             title: 'Delete State Off',
             text: "Click on X icon to turn it back on",
             showClass: {
-              popup: 'animate__animated animate__fadeInDown'
+                popup: 'animate__animated animate__fadeInDown'
             },
             hideClass: {
-              popup: 'animate__animated animate__fadeOutUp'
+                popup: 'animate__animated animate__fadeOutUp'
             }
-          })
+        })
     }
     deleteState = !deleteState;
 

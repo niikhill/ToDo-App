@@ -166,7 +166,18 @@ body {
     margin-top: 0.1rem;
     margin-bottom: 0.1rem;
 }
-
+.lock{
+    display: flex;
+    justify-content: flex-end;
+}
+.fas.fa-lock{
+    font-size: 18px;
+    margin-right: 5px;
+}
+.fas.fa-lock-open{
+    font-size: 18px;
+    margin-right: 5px;
+}
 
 
 @media (max-width:500px){
