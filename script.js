@@ -25,9 +25,12 @@ if (localStorage.getItem("allTask")) {
 for (let i = 0; i < colorBtn.length; i++) {
     colorBtn[i].addEventListener("click", function (e) {
         let color = colorBtn[i].classList[1];
+
         mainContainer.style.backgroundColor = color;
     })
 }
+
+
 
 plusButton.addEventListener("click", createModal);
 crossButton.addEventListener("click", setDeleteState);
@@ -105,8 +108,8 @@ function createTask(color, task, flag, id) {
         let finalArr = JSON.stringify(taskArr);
         localStorage.setItem("allTask", finalArr);
     }
-    taskFilter.addEventListener("click",changeColor)
-    taskContainer.addEventListener("click",deleteTask);
+    taskFilter.addEventListener("click", changeColor)
+    taskContainer.addEventListener("click", deleteTask);
     let taskDesc = taskContainer.querySelector(".task_desc");
     taskDesc.addEventListener("keypress", editTask);
 }
@@ -141,25 +144,65 @@ function changeColor(e) {
 
 function deleteTask(e) {
     let taskContainer = e.currentTarget;
-    if (deleteState == true) {
-        // taskContainer.remove();
-        let uidElem = taskContainer.querySelector(".uid");
-        let uid = uidElem.innerText.split("#")[1];
-        for (let i = 0; i < taskArr.length; i++) {
-            let {
-                id
-            } = taskArr[i];
-            console.log(id, uid);
-            if (id == uid) {
-                taskArr.splice(i, 1);
-                let finalTaskArr = JSON.stringify(taskArr);
-                localStorage.setItem("allTask", finalTaskArr);
-                taskContainer.remove();
-                break;
+    let uidElem = taskContainer.querySelector(".uid");
+    let uid = uidElem.innerText.split("#")[1];
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            Swal.fire(
+                'Deleted!',
+                `Task with ID ${uid} was successfully deleted`,
+                'success'
+            )
+            
+            if (deleteState == true) {
+                // taskContainer.remove();
+                for (let i = 0; i < taskArr.length; i++) {
+                    let {
+                        id
+                    } = taskArr[i];
+                    console.log(id, uid);
+                    if (id == uid) {
+                        taskArr.splice(i, 1);
+                        let finalTaskArr = JSON.stringify(taskArr);
+                        localStorage.setItem("allTask", finalTaskArr);
+                        taskContainer.remove();
+                        break;
+                    }
+                }
             }
         }
-    }
+    })
 }
+
+// function deleteTask(e) {
+//     let taskContainer = e.currentTarget;
+//     if (deleteState == true) {
+//         // taskContainer.remove();
+//         let uidElem = taskContainer.querySelector(".uid");
+//         let uid = uidElem.innerText.split("#")[1];
+//         for (let i = 0; i < taskArr.length; i++) {
+//             let {
+//                 id
+//             } = taskArr[i];
+//             console.log(id, uid);
+//             if (id == uid) {
+//                 taskArr.splice(i, 1);
+//                 let finalTaskArr = JSON.stringify(taskArr);
+//                 localStorage.setItem("allTask", finalTaskArr);
+//                 taskContainer.remove();
+//                 break;
+//             }
+//         }
+//     }
+// }
 
 function editTask(e) {
     let taskDesc = e.currentTarget;
