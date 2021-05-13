@@ -4,9 +4,14 @@ let body = document.body;
 let plusButton = document.querySelector(".fa-plus");
 let deleteState = false;
 let editState = false;
+let lite_theme = false;
 let crossButton = document.querySelector(".fa-times");
 let uifn = new ShortUniqueId();
 let all_task = document.querySelector(".all_task");
+
+
+
+
 
 
 //Tool Tip Text
@@ -32,6 +37,7 @@ tippy(".fa-plus", {
 
 
 let taskArr = [];
+
 if (localStorage.getItem("allTask")) {
     taskArr = JSON.parse(localStorage.getItem("allTask"));
     // UI
@@ -39,11 +45,35 @@ if (localStorage.getItem("allTask")) {
         let {
             id,
             color,
-            task
+            task,
+            theme
         } = taskArr[i];
         createTask(color, task, false, id);
     }
 }
+
+
+//Handle Themes
+let main_container=document.querySelector(".main_container");
+let toolbar = document.querySelector(".toolbar");
+let theme_container = document.querySelector(".theme_container");
+theme_container.addEventListener("click",()=>{
+    if(lite_theme==false){
+        theme_container.children[0].classList.remove("fa-moon");
+        theme_container.children[0].classList.add("fa-sun");
+        lite_theme=true;
+        toolbar.style.backgroundColor="#2d3436";
+        main_container.style.backgroundColor="#ecf0f1";
+    }else{
+        theme_container.children[0].classList.remove("fa-sun");
+        theme_container.children[0].classList.add("fa-moon");
+        lite_theme=false;
+        toolbar.style.backgroundColor="#ecf0f1";
+        main_container.style.backgroundColor="#2d3436";
+    }
+    
+})
+
 
 all_task.addEventListener("click", () => {
     let taskContainer = document.querySelectorAll(".task_container")
@@ -130,8 +160,8 @@ function createModal() {
     </div>
     </div>
     <div class="modal_filter_container">
-        <div class="filter pink"></div>
-        <div class="filter blue"></div>
+        <div class="filter red"></div>
+        <div class="filter yellow"></div>
         <div class="filter green"></div>
         <div class="filter black"></div>
     </div>`;
@@ -273,7 +303,7 @@ function createTask(color, task, flag, id) {
 function changeColor(e) {
     let taskFilter = e.currentTarget;
     let taskContainer = taskFilter.parentNode;
-    let colors = ["pink", "blue", "green", "black"];
+    let colors = ["red", "yellow", "green", "black"];
     let cColor = taskFilter.classList[1];
     let idx = colors.indexOf(cColor);
     let newColorIdx = (idx + 1) % 4;

@@ -43,6 +43,13 @@ body {
     transform: translateY(1px);
 }
 
+.red{
+   background-color:rgb(151, 8, 8); 
+}
+
+.yellow{
+    background-color:yellow;
+}
 .pink {
     background-color: pink;
 }
@@ -75,7 +82,18 @@ body {
     align-items: center;
 }
 
-
+.theme_container{
+    height:60%;
+    width: 2rem;
+    border-radius: 0.2rem;
+    display: flex;
+    border-radius: 0.2rem solid;
+    margin-left: auto;
+    margin-right: 1em;
+    justify-content: center;
+    align-items: center;
+    
+}
 .fas {
     font-size: 1.5rem;
 }
