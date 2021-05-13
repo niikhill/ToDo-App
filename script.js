@@ -5,6 +5,7 @@ let plusButton = document.querySelector(".fa-plus");
 let deleteState = false;
 let editState = false;
 let lite_theme = false;
+let modalState = false;
 let crossButton = document.querySelector(".fa-times");
 let uifn = new ShortUniqueId();
 let all_task = document.querySelector(".all_task");
@@ -54,24 +55,24 @@ if (localStorage.getItem("allTask")) {
 
 
 //Handle Themes
-let main_container=document.querySelector(".main_container");
+let main_container = document.querySelector(".main_container");
 let toolbar = document.querySelector(".toolbar");
 let theme_container = document.querySelector(".theme_container");
-theme_container.addEventListener("click",()=>{
-    if(lite_theme==false){
+theme_container.addEventListener("click", () => {
+    if (lite_theme == false) {
         theme_container.children[0].classList.remove("fa-moon");
         theme_container.children[0].classList.add("fa-sun");
-        lite_theme=true;
-        toolbar.style.backgroundColor="#2d3436";
-        main_container.style.backgroundColor="#ecf0f1";
-    }else{
+        lite_theme = true;
+        toolbar.style.backgroundColor = "#2d3436";
+        main_container.style.backgroundColor = "#ecf0f1";
+    } else {
         theme_container.children[0].classList.remove("fa-sun");
         theme_container.children[0].classList.add("fa-moon");
-        lite_theme=false;
-        toolbar.style.backgroundColor="#ecf0f1";
-        main_container.style.backgroundColor="#2d3436";
+        lite_theme = false;
+        toolbar.style.backgroundColor = "#ecf0f1";
+        main_container.style.backgroundColor = "#2d3436";
     }
-    
+
 })
 
 
@@ -104,37 +105,46 @@ let delete_all_task_icon = document.querySelector(".fa-trash");
 
 delete_all_task_icon.addEventListener("click", () => {
     let taskContainer = document.querySelectorAll(".task_container");
-    if (taskContainer.length == 0) {
+    if (modalState == false) {
+        if (taskContainer.length == 0) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'No Tasks to Delete',
+            })
+        } else {
+            Swal.fire({
+                title: 'This will delete all tasks',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete All!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire(
+                        'Deleted!',
+                        `All Tasks Were deleted`,
+                        'success'
+                    )
+                    // taskContainer.remove();
+                    localStorage.clear();
+                    taskContainer.forEach(item => {
+                        item.remove();
+                    })
+
+                }
+            })
+        }
+    } else {
         Swal.fire({
             icon: 'error',
             title: 'Oops...',
-            text: 'No Tasks to Delete',
-        })
-    } else {
-        Swal.fire({
-            title: 'Are you sure?',
-            text: "You won't be able to revert this!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, delete it!'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                Swal.fire(
-                    'Deleted!',
-                    `All Tasks Were deleted`,
-                    'success'
-                )
-                // taskContainer.remove();
-                localStorage.clear();
-                taskContainer.forEach(item => {
-                    item.remove();
-                })
-
-            }
+            text: 'Please Close add Task Box First',
         })
     }
+
 
 
 })
@@ -169,6 +179,8 @@ function createModal() {
         handleModal(modalcontainer);
         let textArea = modalcontainer.querySelector(".modal_input");
         textArea.value = "";
+        modalState = true;
+        console.log(modalState);
     }
 
 
@@ -206,14 +218,17 @@ function handleModal(modal_container) {
                 if (result.isConfirmed) {
                     Swal.fire('Saved!', '', 'success')
                     modal_container.remove();
+                    modalState = false;
                     createTask(cColor, textArea.value, true);
                 } else if (result.isDenied) {
                     Swal.fire('Changes are not saved', '', 'info')
                     modal_container.remove();
+                    modalState = false;
                 }
             })
         } else {
             modal_container.remove();
+            modalState = false;
         }
     })
 
@@ -222,6 +237,7 @@ function handleModal(modal_container) {
         if (textArea.value != "") {
             console.log("Task ", textArea.value, "color ", cColor);
             modal_container.remove();
+            modalState = false;
             createTask(cColor, textArea.value, true);
         } else {
             Swal.fire({
@@ -415,31 +431,40 @@ function setDeleteState(e) {
 
     let crossButton = e.currentTarget;
     let parent = crossButton.parentNode;
-    if (deleteState == false) {
-        parent.classList.add("active");
-        Swal.fire({
-            title: 'Delete State On',
-            text: "Click on Task to delete it",
-            showClass: {
-                popup: 'animate__animated animate__fadeInDown'
-            },
-            hideClass: {
-                popup: 'animate__animated animate__fadeOutUp'
-            }
-        })
+    if (modalState == false) {
+        if (deleteState == false) {
+            parent.classList.add("active");
+            Swal.fire({
+                title: 'Delete State On',
+                text: "Click on Task to delete it",
+                showClass: {
+                    popup: 'animate__animated animate__fadeInDown'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOutUp'
+                }
+            })
+        } else {
+            parent.classList.remove("active");
+            Swal.fire({
+                title: 'Delete State Off',
+                text: "Click on X icon to turn it back on",
+                showClass: {
+                    popup: 'animate__animated animate__fadeInDown'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOutUp'
+                }
+            })
+        }
     } else {
-        parent.classList.remove("active");
         Swal.fire({
-            title: 'Delete State Off',
-            text: "Click on X icon to turn it back on",
-            showClass: {
-                popup: 'animate__animated animate__fadeInDown'
-            },
-            hideClass: {
-                popup: 'animate__animated animate__fadeOutUp'
-            }
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Please Close add Task Box First',
         })
     }
+
     deleteState = !deleteState;
 
 }

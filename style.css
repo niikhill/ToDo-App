@@ -278,6 +278,14 @@ body {
         justify-content: space-around;
         margin-top: 1px;
     }
+    div.task_container {
+        height: 10rem;
+        width: 16rem;
+        background-color: #fff;
+        border: 1px solid;
+        margin: 13px;
+        margin-right: 52px;
+    }
 }
 
 .trash{
