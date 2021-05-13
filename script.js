@@ -123,10 +123,7 @@ function createModal() {
         modalcontainer.innerHTML = `<div class="input_container">
         <textarea class="modal_input" 
         placeholder="Enter Your text"></textarea>
-        <div class="input_cont_contro" style="
-    display: flex;
-    justify-content: space-around;
-    margin-top: 8px;
+        <div class="input_cont_contro"
 ">
     <i class="fas fa-check add_ticket"></i>
      <i class="fas fa-times close_modal"></i>
