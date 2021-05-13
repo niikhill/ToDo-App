@@ -17,6 +17,7 @@ tippy('.filter_color', {
 
 tippy(".all_task",{
     content: "Click to show all tasks",
+    theme: 'light'
 });
 
 
