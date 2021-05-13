@@ -39,6 +39,9 @@ body {
     width: 54%;
     border-radius: 0.1rem;
 }
+.filter_color:active{
+    transform: translateY(1px);
+}
 
 .pink {
     background-color: pink;
@@ -75,7 +78,9 @@ body {
 .fas {
     font-size: 1.5rem;
 }
-
+.fas:active{
+    transform: translateY(1px);
+}
 .active {
     background-color: #3f4041
 }
@@ -84,11 +89,18 @@ body {
     position: absolute;
     height: 18rem;
     width: 36rem;
-    background-color: brown;
+    background-color: #444;
     left: calc((100vw - 36rem)/2);
     top: 30vh;
     display: flex;
     box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.698);
+}
+.input_cont_contro{
+    height:15%;
+    display: flex;
+    justify-content: space-around;
+    margin-top: 8px;
+
 }
 
 .input_container {
@@ -97,7 +109,7 @@ body {
 }
 
 .modal_input {
-    height: 100%;
+    height: 85%;
     width: 100%;
     outline: none;
     padding: 2rem 3rem;
@@ -144,7 +156,7 @@ body {
     height: 10rem;
     width: 16rem;
     background-color: #fff;
-    border:1px solid;
+    border: 1px solid;
 
 }
 
@@ -167,15 +179,18 @@ body {
     margin-top: 0.1rem;
     margin-bottom: 0.1rem;
 }
-.lock{
+
+.lock {
     display: flex;
     justify-content: flex-end;
 }
-.fas.fa-lock{
+
+.fas.fa-lock {
     font-size: 18px;
     margin-right: 5px;
 }
-.fas.fa-lock-open{
+
+.fas.fa-lock-open {
     font-size: 18px;
     margin-right: 5px;
 }
@@ -191,7 +206,12 @@ body {
     border-radius: 0.2rem;
 }
 
-@media (max-width:500px){
+.all_task:active {
+    /* box-shadow: 0 5px #666; */
+    transform: translateY(1px);
+}
+
+@media (max-width:500px) {
     div.modal_container {
         position: absolute;
         height: 14rem;

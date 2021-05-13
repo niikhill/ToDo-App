@@ -81,6 +81,14 @@ function createModal() {
         modalcontainer.innerHTML = `<div class="input_container">
         <textarea class="modal_input" 
         placeholder="Enter Your text"></textarea>
+        <div class="input_cont_contro" style="
+    display: flex;
+    justify-content: space-around;
+    margin-top: 8px;
+">
+    <i class="fas fa-check add_ticket"></i>
+     <i class="fas fa-times close_modal"></i>
+    </div>
     </div>
     <div class="modal_filter_container">
         <div class="filter pink"></div>
@@ -113,11 +121,45 @@ function handleModal(modal_container) {
         })
     }
     let textArea = document.querySelector(".modal_input");
-    textArea.addEventListener("keydown", function (e) {
-        if (e.key == "Enter" && textArea.value != "") {
+    let add_tick_icon = document.querySelector(".add_ticket");
+    let close_modal_icon = document.querySelector(".close_modal")
+
+    close_modal_icon.addEventListener("click", () => {
+        if (textArea.value != "") {
+            Swal.fire({
+                title: 'Do you want to save the changes?',
+                showDenyButton: true,
+                showCancelButton: true,
+                confirmButtonText: `Save`,
+                denyButtonText: `Don't save`,
+            }).then((result) => {
+                /* Read more about isConfirmed, isDenied below */
+                if (result.isConfirmed) {
+                    Swal.fire('Saved!', '', 'success')
+                    modal_container.remove();
+                    createTask(cColor, textArea.value, true);
+                } else if (result.isDenied) {
+                    Swal.fire('Changes are not saved', '', 'info')
+                    modal_container.remove();
+                }
+            })
+        } else {
+            modal_container.remove();
+        }
+    })
+
+
+    add_tick_icon.addEventListener("click", function (e) {
+        if (textArea.value != "") {
             console.log("Task ", textArea.value, "color ", cColor);
             modal_container.remove();
             createTask(cColor, textArea.value, true);
+        } else {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Enter The Task Please!',
+            })
         }
     })
 
@@ -158,7 +200,7 @@ function createTask(color, task, flag, id) {
         theme: "light",
     });
 
-    
+
     taskContainer.addEventListener("click", deleteTask);
     let taskDesc = taskContainer.querySelector(".task_desc");
     taskDesc.addEventListener("keypress", editTask);
