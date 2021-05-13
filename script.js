@@ -6,14 +6,18 @@ let deleteState = false;
 let editState = false;
 let crossButton = document.querySelector(".fa-times");
 let uifn = new ShortUniqueId();
+let all_task = document.querySelector(".all_task");
 
 
 //Tool Tip Text
-tippy('#filter-container', {
+tippy('.filter_color', {
     content: "Click on color to filter the tasks",
     theme: 'light'
 });
 
+tippy(".all_task",{
+    content: "Click to show all tasks",
+});
 
 
 
@@ -31,6 +35,12 @@ if (localStorage.getItem("allTask")) {
     }
 }
 
+all_task.addEventListener("click",()=>{
+    let taskContainer = document.querySelectorAll(".task_container")
+    taskContainer.forEach(item => {
+        item.style.display = "block";
+    })  
+})
 
 for (let i = 0; i < colorBtn.length; i++) {
     colorBtn[i].addEventListener("click", function (e) {
@@ -39,6 +49,7 @@ for (let i = 0; i < colorBtn.length; i++) {
         taskContainer.forEach(item => {
             if (item.children[0].classList[1] == color) {
                 item.style.display = "block";
+                // mainContainer.style.backgroundColor =color;
             } else {
                 item.style.display = "none";
             }

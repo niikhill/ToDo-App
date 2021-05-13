@@ -36,7 +36,7 @@ body {
 
 .filter_color {
     height: 40%;
-    width: 40%;
+    width: 54%;
     border-radius: 0.1rem;
 }
 
@@ -144,6 +144,7 @@ body {
     height: 10rem;
     width: 16rem;
     background-color: #fff;
+    border:1px solid;
 
 }
 
@@ -179,6 +180,16 @@ body {
     margin-right: 5px;
 }
 
+.allTask_container {
+    height: 60%;
+    width: 2rem;
+    background-color: #6d7c7e;
+    margin-left: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.2rem;
+}
 
 @media (max-width:500px){
     div.modal_container {
