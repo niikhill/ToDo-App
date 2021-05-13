@@ -101,7 +101,6 @@ body {
     display: flex;
     justify-content: space-around;
     margin-top: 8px;
-
 }
 
 .input_container {
@@ -253,6 +252,13 @@ body {
         justify-content: space-evenly;
         flex-wrap: wrap;
         overflow-y: auto;
+    }
+
+    div.input_cont_contro{
+        height:15%;
+        display: flex;
+        justify-content: space-around;
+        margin-top: 1px;
     }
 }
 
