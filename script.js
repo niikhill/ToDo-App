@@ -68,6 +68,48 @@ for (let i = 0; i < colorBtn.length; i++) {
 }
 
 
+//Delete all Task icon 
+
+let delete_all_task_icon = document.querySelector(".fa-trash");
+
+delete_all_task_icon.addEventListener("click", () => {
+    let taskContainer = document.querySelectorAll(".task_container");
+    if (taskContainer.length == 0) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'No Tasks to Delete',
+        })
+    } else {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire(
+                    'Deleted!',
+                    `All Tasks Were deleted`,
+                    'success'
+                )
+                // taskContainer.remove();
+                localStorage.clear();
+                taskContainer.forEach(item => {
+                    item.remove();
+                })
+
+            }
+        })
+    }
+
+
+})
+
+
 
 plusButton.addEventListener("click", createModal);
 crossButton.addEventListener("click", setDeleteState);

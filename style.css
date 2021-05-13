@@ -75,6 +75,7 @@ body {
     align-items: center;
 }
 
+
 .fas {
     font-size: 1.5rem;
 }
@@ -216,7 +217,7 @@ body {
         position: absolute;
         height: 14rem;
         width: 22rem;
-        background-color: brown;
+        background-color: #444;
         left: calc((100vw - 36rem)/2);
         top: 30vh;
         display: flex;
@@ -253,4 +254,8 @@ body {
         flex-wrap: wrap;
         overflow-y: auto;
     }
+}
+
+.trash{
+    font-size:19px;
 }
