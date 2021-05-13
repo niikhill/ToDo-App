@@ -15,11 +15,20 @@ tippy('.filter_color', {
     theme: 'light'
 });
 
-tippy(".all_task",{
+tippy(".all_task", {
     content: "Click to show all tasks",
     theme: 'light'
 });
 
+tippy(".fa-times", {
+    content: "Click to deleteTasks",
+    theme: "light",
+});
+
+tippy(".fa-plus", {
+    content: "Click to add a task",
+    theme: "light",
+});
 
 
 let taskArr = [];
@@ -36,11 +45,11 @@ if (localStorage.getItem("allTask")) {
     }
 }
 
-all_task.addEventListener("click",()=>{
+all_task.addEventListener("click", () => {
     let taskContainer = document.querySelectorAll(".task_container")
     taskContainer.forEach(item => {
         item.style.display = "block";
-    })  
+    })
 })
 
 for (let i = 0; i < colorBtn.length; i++) {
@@ -111,7 +120,7 @@ function handleModal(modal_container) {
             createTask(cColor, textArea.value, true);
         }
     })
-    
+
 }
 
 
@@ -143,12 +152,19 @@ function createTask(color, task, flag, id) {
         localStorage.setItem("allTask", finalArr);
     }
     taskFilter.addEventListener("click", changeColor)
+
+    tippy(".task_container .task_filter", {
+        content: "Click to change task color",
+        theme: "light",
+    });
+
+    
     taskContainer.addEventListener("click", deleteTask);
     let taskDesc = taskContainer.querySelector(".task_desc");
     taskDesc.addEventListener("keypress", editTask);
 
     let lockElem = taskContainer.querySelectorAll(".lock")
-    tippy('#edit_lock',{
+    tippy('#edit_lock', {
         content: "Click on lock to edit the tasks",
         theme: 'light',
     })
@@ -159,15 +175,15 @@ function createTask(color, task, flag, id) {
                 item.children[0].classList.remove("fa-lock");
                 item.children[0].classList.add("fa-lock-open");
                 editState = true;
-                taskDesc.setAttribute("contentEditable","true");
+                taskDesc.setAttribute("contentEditable", "true");
             } else {
                 item.children[0].classList.remove("fa-lock-open");
                 item.children[0].classList.add("fa-lock");
                 editState = false;
-                taskDesc.setAttribute("contentEditable","false");
+                taskDesc.setAttribute("contentEditable", "false");
             }
         })
-        
+
 
     })
 
