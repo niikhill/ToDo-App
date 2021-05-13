@@ -69,9 +69,9 @@ function createModal() {
     </div>`;
         body.appendChild(modalcontainer);
         handleModal(modalcontainer);
+        let textArea = modalcontainer.querySelector(".modal_input");
+        textArea.value = "";
     }
-    let textArea = modalcontainer.querySelector(".modal_input");
-    textArea.value = "";
 
 
 }
@@ -99,6 +99,7 @@ function handleModal(modal_container) {
             createTask(cColor, textArea.value, true);
         }
     })
+    
 }
 
 
