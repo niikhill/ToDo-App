@@ -4,7 +4,7 @@ let body = document.body;
 let plusButton = document.querySelector(".fa-plus");
 let deleteState = false;
 let editState = false;
-let lite_theme = false;
+let lite_theme = true;
 let modalState = false;
 let crossButton = document.querySelector(".fa-times");
 let uifn = new ShortUniqueId();
@@ -35,6 +35,12 @@ tippy(".fa-plus", {
     content: "Click to add a task",
     theme: "light",
 });
+tippy(".fa-sun",{
+    content: "Click to change themes",
+})
+tippy(".fa-trash",{
+    content: "Click to Delete All Tasks",
+})
 
 
 let taskArr = [];
@@ -288,7 +294,7 @@ function createTask(color, task, flag, id) {
 
     taskContainer.addEventListener("click", deleteTask);
     let taskDesc = taskContainer.querySelector(".task_desc");
-    taskDesc.addEventListener("keypress", editTask);
+    taskDesc.addEventListener("keyup", editTask);
 
     let lockElem = taskContainer.querySelectorAll(".lock")
     tippy('#edit_lock', {
@@ -301,13 +307,13 @@ function createTask(color, task, flag, id) {
             if (editState == false) {
                 item.children[0].classList.remove("fa-lock");
                 item.children[0].classList.add("fa-lock-open");
-                editState = true;
                 taskDesc.setAttribute("contentEditable", "true");
+                editState = true;
             } else {
                 item.children[0].classList.remove("fa-lock-open");
                 item.children[0].classList.add("fa-lock");
-                editState = false;
                 taskDesc.setAttribute("contentEditable", "false");
+                editState = false;
             }
         })
 
@@ -421,7 +427,6 @@ function editTask(e) {
             taskArr[i].task = taskDesc.innerText
             let finalTaskArr = JSON.stringify(taskArr);
             localStorage.setItem("allTask", finalTaskArr);
-
             break;
         }
     }
